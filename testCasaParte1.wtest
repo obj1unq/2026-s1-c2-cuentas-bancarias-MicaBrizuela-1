@@ -5,5 +5,41 @@ describe "casa de pepe y julian" {
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
   // method initialize() {
   // }
+  test "funcionamiento de casa con cuenta corriente" {
+    assert.equals(0,cuentaCorriente.saldo())
+    casa.cuentaGestion(cuentaCorriente)
+    cuentaCorriente.despositar(300)
+    assert.equals(0, casa.gastos())
+    casa.gastar(200)
+    assert.equals(100,cuentaCorriente.saldo())
+    assert.equals(200, casa.gastos())
+    casa.gastar(400)
+    assert.equals(0-300,cuentaCorriente.saldo())
+    assert.equals(600, casa.gastos())
+    casa.cambiarElMes()
+    assert.equals(0, casa.gastos())
+  }
+
+  test "funcionamiento normal de casa con cuenta con gastos"{
+    assert.equals(0,cuentaConGastos.saldo())
+    casa.cuentaGestion(cuentaConGastos)
+    assert.equals(20,cuentaConGastos.costoOperacion())
+    cuentaConGastos.despositar(1000)
+    assert.equals(980, cuentaConGastos.saldo())
+    cuentaConGastos.extraer(580)
+    assert.equals(400, cuentaConGastos.saldo())
+    cuentaConGastos.extraer(500)
+    assert.equals(0-100, cuentaConGastos.saldo())
+    cuentaConGastos.despositar(150)
+    assert.equals(30, cuentaConGastos.saldo())
+  }
+
+  test "funcionamiento caso excepcional de casa con cuenta con gastos"{
+    assert.equals(0, cuentaConGastos.saldo())
+    casa.cuentaGestion(cuentaConGastos)
+    assert.equals(20, cuentaConGastos.costoOperacion())
+    assert.throwsException({cuentaConGastos.despositar(10)})
+    assert.equals(0, cuentaConGastos.saldo())
+  }
 
 }
