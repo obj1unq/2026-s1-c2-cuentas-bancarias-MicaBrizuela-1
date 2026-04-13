@@ -43,8 +43,12 @@ object cuentaCorriente {
 }
 
 object cuentaConGastos {
-    const costoOperacion = 200
+    const costoOperacion = 20
     var saldo = 0
+
+    method costoOperacion(){
+        return costoOperacion
+    }
 
     method saldo(){
         return saldo
@@ -67,5 +71,32 @@ object cuentaConGastos {
 
     method calcularMontoReal(monto) {
         return monto - costoOperacion
+    }
+}
+
+
+// ejercicio 2
+
+object cuentaCombinada{
+    var cuentaSecundaria = cuentaCorriente
+    var cuentaPrimaria = cuentaCorriente
+
+    method saldo(){
+        return 0.max(cuentaPrimaria.sueldo()) + 0.max(cuentaSecundaria.sueldo())
+    }
+
+    method extraer(monto){
+        if (monto > cuentaPrimaria.saldo()){
+            cuentaPrimaria.extraer(cuentaPrimaria.saldo())
+            
+        }
+    }
+
+    method validarExtraccion(monto){
+   
+    }
+
+    method depositar(monto){
+        cuentaPrimaria.depositar(monto)
     }
 }
