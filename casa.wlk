@@ -3,6 +3,11 @@
 // casa.wlk
 // casa.wlk
 // casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
 object casa {
     var gastosMes = 0
     var cuentaGestion = cuentaCorriente
@@ -39,11 +44,27 @@ object cuentaCorriente {
     }
 
     method extraer(monto){
-        saldo -= monto
+        saldo = saldo - monto
     }
 
-    method despositar(monto){
-        saldo += monto
+    method depositar(monto){
+        saldo = saldo + monto
+    }
+}
+
+object cuentaCorrienteClonTest { //al no tener intancias y necesitar numeros redondos para test, tuve que crear esto
+    var saldo = 0
+
+    method saldo(){
+        return saldo
+    }
+
+    method extraer(monto){
+        saldo = saldo - monto
+    }
+
+    method depositar(monto){
+        saldo = saldo + monto
     }
 }
 
@@ -63,7 +84,7 @@ object cuentaConGastos {
         saldo -= monto
     }
 
-    method despositar(monto){
+    method depositar(monto){
         self.validarDeposito(monto)
         saldo += self.calcularMontoReal(monto)
     }
@@ -84,7 +105,7 @@ object cuentaConGastos {
 
 object cuentaCombinada{
     var cuentaSecundaria = cuentaCorriente
-    var cuentaPrimaria = cuentaCorriente
+    var cuentaPrimaria = cuentaCorrienteClonTest
 
     method cuentaPrimaria(_cuenta) {
       cuentaPrimaria = _cuenta
@@ -92,6 +113,38 @@ object cuentaCombinada{
 
     method cuentaSecundaria(_cuenta){
         cuentaSecundaria = _cuenta
+    }
+
+    method cuentaPrimaria() {
+      return cuentaPrimaria
+    }
+
+    method cuentaSecundaria(){
+        return cuentaSecundaria
+    }
+
+    method test_depositarCuentaPrimaria(monto){
+        cuentaPrimaria.depositar(monto)
+    }
+
+    method test_depositarCuentaSecundaria(monto){
+        cuentaSecundaria.depositar(monto)
+    }
+
+    method test_extraerCuentaPrimaria(monto){
+        cuentaPrimaria.extraer(monto)
+    }
+
+    method test_extraerCuentaSecundaria(monto){
+        cuentaSecundaria.extraer(monto)
+    }
+
+    method test_saldoCuentaPrimaria(){
+        return cuentaPrimaria.saldo()
+    }
+
+    method test_saldoCuentaSecundaria(){
+        return cuentaSecundaria.saldo()
     }
 
     method saldo(){

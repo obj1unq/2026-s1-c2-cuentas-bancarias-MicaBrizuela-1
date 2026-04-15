@@ -1,6 +1,27 @@
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
 import casa.*
 
-describe "casa de pepe y julian" {
+describe "casa de pepe y julian ejercicio 1" {
 
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
   // method initialize() {
@@ -8,7 +29,7 @@ describe "casa de pepe y julian" {
   test "funcionamiento de casa con cuenta corriente" {
     assert.equals(0,cuentaCorriente.saldo())
     casa.cuentaGestion(cuentaCorriente)
-    cuentaCorriente.despositar(300)
+    cuentaCorriente.depositar(300)
     assert.equals(0, casa.gastos())
     casa.gastar(200)
     assert.equals(100,cuentaCorriente.saldo())
@@ -24,13 +45,13 @@ describe "casa de pepe y julian" {
     assert.equals(0,cuentaConGastos.saldo())
     casa.cuentaGestion(cuentaConGastos)
     assert.equals(20,cuentaConGastos.costoOperacion())
-    cuentaConGastos.despositar(1000)
+    cuentaConGastos.depositar(1000)
     assert.equals(980, cuentaConGastos.saldo())
     cuentaConGastos.extraer(580)
     assert.equals(400, cuentaConGastos.saldo())
     cuentaConGastos.extraer(500)
     assert.equals(0-100, cuentaConGastos.saldo())
-    cuentaConGastos.despositar(150)
+    cuentaConGastos.depositar(150)
     assert.equals(30, cuentaConGastos.saldo())
   }
 
@@ -38,8 +59,51 @@ describe "casa de pepe y julian" {
     assert.equals(0, cuentaConGastos.saldo())
     casa.cuentaGestion(cuentaConGastos)
     assert.equals(20, cuentaConGastos.costoOperacion())
-    assert.throwsException({cuentaConGastos.despositar(10)})
+    assert.throwsException({cuentaConGastos.depositar(10)})
     assert.equals(0, cuentaConGastos.saldo())
   }
 
+}
+
+describe "ejercicio 2 cuentas combinadas: saldo cuentas combinadas" {
+
+  method initialize(){
+    casa.cuentaGestion(cuentaCombinada)
+    cuentaCombinada.cuentaPrimaria(cuentaCorriente)
+    cuentaCombinada.cuentaSecundaria(cuentaCorrienteClonTest)
+  }
+
+  test "saldos cuenta combinada 200 + 50" {
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCombinada.test_depositarCuentaPrimaria(200)
+    cuentaCombinada.test_depositarCuentaSecundaria(50)
+    assert.equals(250, cuentaCombinada.saldo())
+  }
+
+  test "saldos cuenta combinada -50 + 200"{
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCombinada.test_extraerCuentaPrimaria(50)
+    cuentaCombinada.test_depositarCuentaSecundaria(200)
+    assert.equals(200, cuentaCombinada.saldo())
+  }
+
+    test "saldos cuenta combinada 150 -20"{
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCombinada.test_depositarCuentaPrimaria(150)
+    cuentaCombinada.test_extraerCuentaSecundaria(20)
+    assert.equals(150, cuentaCombinada.saldo())
+  }
+
+  test "saldos cuenta combinada -40 -60"{
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCombinada.test_extraerCuentaPrimaria(40)
+    cuentaCombinada.test_extraerCuentaSecundaria(60)
+    assert.equals(0, cuentaCombinada.saldo())
+  }
+}
+
+describe "Gastos de la cuenta combinada"{
+  test "8"{
+    assert.equals(0,0)
+  }
 }
