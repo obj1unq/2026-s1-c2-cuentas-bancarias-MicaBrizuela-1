@@ -123,30 +123,6 @@ object cuentaCombinada{
         return cuentaSecundaria
     }
 
-    method test_depositarCuentaPrimaria(monto){
-        cuentaPrimaria.depositar(monto)
-    }
-
-    method test_depositarCuentaSecundaria(monto){
-        cuentaSecundaria.depositar(monto)
-    }
-
-    method test_extraerCuentaPrimaria(monto){
-        cuentaPrimaria.extraer(monto)
-    }
-
-    method test_extraerCuentaSecundaria(monto){
-        cuentaSecundaria.extraer(monto)
-    }
-
-    method test_saldoCuentaPrimaria(){
-        return cuentaPrimaria.saldo()
-    }
-
-    method test_saldoCuentaSecundaria(){
-        return cuentaSecundaria.saldo()
-    }
-
     method saldo(){
         return 0.max(cuentaPrimaria.saldo()) + 0.max(cuentaSecundaria.saldo())
     }
