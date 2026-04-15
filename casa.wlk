@@ -1,3 +1,8 @@
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
 object casa {
     var gastosMes = 0
     var cuentaGestion = cuentaCorriente
@@ -81,22 +86,39 @@ object cuentaCombinada{
     var cuentaSecundaria = cuentaCorriente
     var cuentaPrimaria = cuentaCorriente
 
+    method cuentaPrimaria(_cuenta) {
+      cuentaPrimaria = _cuenta
+    }
+
+    method cuentaSecundaria(_cuenta){
+        cuentaSecundaria = _cuenta
+    }
+
     method saldo(){
-        return 0.max(cuentaPrimaria.sueldo()) + 0.max(cuentaSecundaria.sueldo())
+        return 0.max(cuentaPrimaria.saldo()) + 0.max(cuentaSecundaria.saldo())
     }
 
     method extraer(monto){
-        if (monto > cuentaPrimaria.saldo()){
+        self.validarExtraccion(monto)
+        if (monto <= cuentaPrimaria.saldo()){
+            cuentaPrimaria.extraer(monto)
+        } else {
+            cuentaSecundaria.extraer(monto-cuentaPrimaria.saldo())
             cuentaPrimaria.extraer(cuentaPrimaria.saldo())
-            
         }
     }
 
     method validarExtraccion(monto){
-   
+        if (monto > self.saldo()){
+            self.error("Balance insufiente para esta extraccion")
+        }
     }
 
     method depositar(monto){
         cuentaPrimaria.depositar(monto)
     }
 }
+
+
+//ejercicio 3
+
