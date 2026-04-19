@@ -22,11 +22,27 @@
 // casa.wlk
 // casa.wlk
 // casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
 object casa {
     var gastosMes = 0
     var cuentaGestion = cuentaCorriente
-    var viveres = 0
+    var viveres = 40
     var reparacion =  0
+    var estrategia = minimo
+
+    method estrategia(_estrategia){
+        estrategia = _estrategia
+    }
+
+    method estrategia() = estrategia
 
     method reparacion(){
         return reparacion
@@ -97,6 +113,40 @@ object casa {
 
     method cambiarElMes(){
         gastosMes = 0
+        estrategia.ejecutar(self)
+    }
+}
+
+// tipo estrategia de mantenimiento
+
+object minimo{ // busca comprar la minima cantidad de viveres posible
+    var property calidadViveres = 1
+
+    method ejecutar(unaCasa) {
+      if (!unaCasa.tieneViveresSuficientes()){
+        unaCasa.comprarViveres(40-unaCasa.viveres(), self.calidadViveres())
+      }
+    }
+}
+
+object full{ //busca siempre comprar todos los viveres posibles, incluso si tienen deuda.
+    const property calidadViveres = 5
+    
+    method ejecutar(unaCasa){
+        var porcentajeAComprar = 0
+        if (!unaCasa.estaEnOrden()){
+            if(unaCasa.viveres() < 40){
+                porcentajeAComprar = 40-unaCasa.viveres()
+            }
+            if (unaCasa.cuentaGestion().saldo() >= unaCasa.reparacion()){
+                unaCasa.realizarTodasLasReparaciones()
+            }
+        } else {
+            if (unaCasa.viveres() < 100) {
+                porcentajeAComprar = 100-unaCasa.viveres()
+            }
+        }
+        unaCasa.comprarViveres(porcentajeAComprar,calidadViveres)
     }
 }
 
