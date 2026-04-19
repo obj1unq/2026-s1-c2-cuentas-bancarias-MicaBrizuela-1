@@ -28,6 +28,10 @@ object casa {
     var viveres = 0
     var reparacion =  0
 
+    method reparacion(){
+        return reparacion
+    }
+
     method registrarReparacionNecesaria(monto){
         reparacion += monto
     }
@@ -37,7 +41,7 @@ object casa {
         reparacion = 0
     }
 
-    method tieneViveresSuficentes(){
+    method tieneViveresSuficientes(){
         return viveres >= 40
     }
 
@@ -46,7 +50,7 @@ object casa {
     }
 
     method estaEnOrden(){
-        return !(self.hayQueHacerReparaciones()) && self.tieneViveresSuficentes()
+        return !(self.hayQueHacerReparaciones()) && self.tieneViveresSuficientes()
     }
         
     // porcentajeAComprar debe ser un numero entero de 1 al 100
