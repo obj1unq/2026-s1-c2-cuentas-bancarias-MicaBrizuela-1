@@ -1,0 +1,39 @@
+// testCasaParte3.wtest
+// testCasaParte3.wtest
+// testCasaParte3.wtest
+// testCasaParte3.wtest
+// testCasaParte3.wtest
+// testCasaParte3.wtest
+import casa.*
+
+describe "viveres y reparaciones"{
+    test "caso de la consigna:"{
+        casa.viveres(30)
+        assert.equals(0, casa.reparacion())
+        assert.equals(30, casa.viveres())
+        casa.cuentaGestion(cuentaCorriente)
+        cuentaCorriente.depositar(2000)
+        assert.equals(2000, cuentaCorriente.saldo())
+        casa.registrarReparacionNecesaria(1000)
+        assert.notThat(casa.tieneViveresSuficientes())
+        assert.that(casa.hayQueHacerReparaciones())
+        assert.notThat(casa.estaEnOrden())
+        assert.throwsException({casa.comprarViveres(80,2)})
+        assert.equals(30, casa.viveres())
+        assert.equals(0, casa.gastos())
+        assert.equals(2000, cuentaCorriente.saldo())
+        casa.comprarViveres(20, 2)
+        assert.that(casa.tieneViveresSuficientes())
+        assert.equals(50, casa.viveres())
+        assert.notThat(casa.estaEnOrden())
+        assert.equals(1960, cuentaCorriente.saldo())
+        assert.equals(40, casa.gastos())
+        casa.realizarTodasLasReparaciones()
+        assert.notThat(casa.hayQueHacerReparaciones())
+        assert.that(casa.estaEnOrden())
+        assert.equals(960, cuentaCorriente.saldo())
+        assert.equals(1040, casa.gastos())
+    }
+    
+
+}

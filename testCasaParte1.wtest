@@ -1,9 +1,95 @@
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
+// testCasaParte1.wtest
 import casa.*
 
-describe "casa de pepe y julian" {
+describe "casa de pepe y julian ejercicio 1 cuenta corriente" {
 
   // Descomentar si hiciera falta un metodo para inicializar el ambiente
   // method initialize() {
   // }
+  test "funcionamiento de casa con cuenta corriente" {
+    assert.equals(0,cuentaCorriente.saldo())
+    casa.cuentaGestion(cuentaCorriente)
+    cuentaCorriente.depositar(300)
+    assert.equals(0, casa.gastos())
+    casa.gastar(200)
+    assert.equals(100,cuentaCorriente.saldo())
+    assert.equals(200, casa.gastos())
+    casa.gastar(400)
+    assert.equals(-300,cuentaCorriente.saldo())
+    assert.equals(600, casa.gastos())
+    casa.cambiarElMes()
+    assert.equals(0, casa.gastos())
+  }
+
+}
+
+describe "ejercicio 1: cuentaConGastos"{
+
+  method initialize(){
+    casa.cuentaGestion(cuentaConGastos)
+    cuentaConGastos.costoOperacion(20)
+  }
+
+  test "funcionamiento normal de casa con cuenta con gastos"{
+    assert.equals(0,cuentaConGastos.saldo())
+    assert.equals(20,cuentaConGastos.costoOperacion())
+    cuentaConGastos.depositar(1000)
+    assert.equals(980, cuentaConGastos.saldo())
+    cuentaConGastos.extraer(580)
+    assert.equals(400, cuentaConGastos.saldo())
+    cuentaConGastos.extraer(500)
+    assert.equals(-100, cuentaConGastos.saldo())
+    cuentaConGastos.depositar(150)
+    assert.equals(30, cuentaConGastos.saldo())
+  }
+
+  test "funcionamiento caso excepcional de casa con cuenta con gastos"{
+    assert.equals(0, cuentaConGastos.saldo())
+    assert.equals(20, cuentaConGastos.costoOperacion())
+    assert.throwsException({cuentaConGastos.depositar(10)})
+    assert.equals(0, cuentaConGastos.saldo())
+  }
 
 }
