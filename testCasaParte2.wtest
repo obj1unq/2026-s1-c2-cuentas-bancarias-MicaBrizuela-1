@@ -1,0 +1,67 @@
+// testCasaParte2.wtest
+// testCasaParte2.wtest
+import casa.*
+
+describe "ejercicio 2 cuentas combinadas: saldo cuentas combinadas" {
+
+  method initialize(){
+    casa.cuentaGestion(cuentaCombinada)
+    cuentaCombinada.cuentaPrimaria(cuentaCorriente)
+    cuentaCombinada.cuentaSecundaria(cuentaCorrienteClonTest)
+  }
+
+  test "saldos cuenta combinada 200 + 50" {
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCorriente.depositar(200)
+    cuentaCorrienteClonTest.depositar(50)
+    assert.equals(250, cuentaCombinada.saldo())
+  }
+
+  test "saldos cuenta combinada -50 + 200"{
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCorriente.extraer(50)
+    cuentaCorrienteClonTest.depositar(200)
+    assert.equals(200, cuentaCombinada.saldo())
+  }
+
+    test "saldos cuenta combinada 150 -20"{
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCorriente.depositar(150)
+    cuentaCorrienteClonTest.extraer(20)
+    assert.equals(150, cuentaCombinada.saldo())
+  }
+
+  test "saldos cuenta combinada -40 -60"{
+    assert.equals(0, cuentaCombinada.saldo())
+    cuentaCorriente.extraer(40)
+    cuentaCorrienteClonTest.extraer(60)
+    assert.equals(0, cuentaCombinada.saldo())
+  }
+}
+
+describe "Ejercicio 2: Gastos de la cuenta combinada"{
+  test "cuenta con gatos primaria y cuenta corriente secundaria"{
+    casa.cuentaGestion(cuentaCombinada)
+    cuentaCombinada.cuentaPrimaria(cuentaConGastos)
+    cuentaConGastos.costoOperacion(20)
+    cuentaCombinada.cuentaSecundaria(cuentaCorriente)
+    assert.equals(0, cuentaCombinada.saldo())
+    assert.equals(0, cuentaConGastos.saldo())
+    assert.equals(20, cuentaConGastos.costoOperacion())
+    cuentaCorriente.depositar(300)
+    assert.equals(300, cuentaCorriente.saldo())
+    cuentaCombinada.depositar(100)
+    assert.equals(80, cuentaConGastos.saldo())
+    assert.equals(380, cuentaCombinada.saldo())
+    casa.gastar(280)
+    assert.equals(280, casa.gastos())
+    assert.equals(100, cuentaCombinada.saldo())
+    assert.equals(0, cuentaConGastos.saldo())
+    assert.equals(100, cuentaCorriente.saldo())
+    assert.throwsException({cuentaCombinada.depositar(10)})
+    assert.equals(100, cuentaCombinada.saldo())
+    assert.throwsException({casa.gastar(1000)})
+    assert.equals(100, cuentaCombinada.saldo())
+    assert.equals(280, casa.gastos())
+  }
+}
