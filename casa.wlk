@@ -26,16 +26,34 @@ object casa {
     var gastosMes = 0
     var cuentaGestion = cuentaCorriente
     var viveres = 0
+    var reparacion =  0
 
-    method registrarReparacionNecesaria(){
-        
+    method registrarReparacionNecesaria(monto){
+        reparacion += monto
+    }
+
+    method realizarTodasLasReparaciones(){
+        self.gastar(reparacion)
+        reparacion = 0
+    }
+
+    method tieneViveresSuficentes(){
+        return viveres >= 40
+    }
+
+    method hayQueHacerReparaciones(){
+        return reparacion > 0
+    }
+
+    method estaEnOrden(){
+        return !(self.hayQueHacerReparaciones()) && self.tieneViveresSuficentes()
     }
         
     // porcentajeAComprar debe ser un numero entero de 1 al 100
     method comprarViveres(porcentajeAComprar, calidad){
         self.validarPorcentajeViveres(porcentajeAComprar)
         self.gastar(self._calculoViveres(porcentajeAComprar, calidad))
-        viveres += self._calculoViveres(porcentajeAComprar, calidad)
+        viveres += porcentajeAComprar
     }
 
     method _calculoViveres(porcentajeAComprar, calidad) {
