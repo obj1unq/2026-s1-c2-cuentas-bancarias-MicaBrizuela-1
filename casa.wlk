@@ -31,6 +31,7 @@
 // casa.wlk
 // casa.wlk
 // casa.wlk
+// casa.wlk
 object casa {
     var gastosMes = 0
     var cuentaGestion = cuentaCorriente
@@ -112,8 +113,8 @@ object casa {
     }
 
     method cambiarElMes(){
-        gastosMes = 0
         estrategia.ejecutar(self)
+        gastosMes = 0
     }
 }
 

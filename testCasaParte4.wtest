@@ -1,0 +1,59 @@
+// testCasaParte4.wtest
+// testCasaParte4.wtest
+// testCasaParte4.wtest
+import casa.*
+
+describe 'estrategia minimo indispensable'{
+
+    method initialize(){
+        casa.viveres(30)
+        casa.registrarReparacionNecesaria(100)
+        casa.cuentaGestion(cuentaCombinada)
+        cuentaConGastos.costoOperacion(20)
+        cuentaCombinada.cuentaPrimaria(cuentaConGastos)
+        cuentaCombinada.cuentaSecundaria(cuentaCorriente)
+        minimo.calidadViveres(3)
+        casa.estrategia(minimo)
+    }
+    test 'caso en consigna:'{
+        assert.equals(0, cuentaConGastos.saldo())
+        assert.equals(0, cuentaCorriente.saldo())
+        assert.equals(0, cuentaCombinada.saldo())
+        assert.throwsException({ casa.cambiarElMes() })
+        assert.equals(30, casa.viveres())
+        assert.equals(0, casa.gastos())
+        cuentaCombinada.depositar(100)
+        casa.cambiarElMes()
+        assert.equals(40, casa.viveres())
+        assert.equals(100, casa.reparacion())
+        assert.equals(0, casa.gastos())
+        assert.equals(50, cuentaCombinada.saldo())
+    }
+}
+
+describe 'estrategia full'{
+    method initialize(){
+        casa.viveres(30)
+        casa.registrarReparacionNecesaria(100)
+        casa.cuentaGestion(cuentaCorriente)
+        casa.estrategia(full)
+    }
+    test 'consigna:'{
+        assert.equals(0, cuentaCorriente.saldo())
+        casa.cambiarElMes()
+        assert.equals(100, casa.reparacion())
+        assert.equals(40, casa.viveres())
+        assert.equals(-50, cuentaCorriente.saldo())
+        cuentaCorriente.depositar(450)
+        casa.cambiarElMes()
+        assert.equals(0, casa.reparacion())
+        assert.equals(40, casa.viveres())
+        assert.equals(300, cuentaCorriente.saldo())
+        casa.cambiarElMes()
+        assert.equals(100, casa.viveres())
+        assert.equals(0, cuentaCorriente.saldo())
+        casa.cambiarElMes()
+        assert.equals(100, casa.viveres())
+        assert.equals(0, cuentaCorriente.saldo())
+    }
+}
