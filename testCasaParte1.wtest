@@ -36,6 +36,7 @@
 // testCasaParte1.wtest
 // testCasaParte1.wtest
 // testCasaParte1.wtest
+// testCasaParte1.wtest
 import casa.*
 
 describe "casa de pepe y julian ejercicio 1" {
@@ -52,7 +53,7 @@ describe "casa de pepe y julian ejercicio 1" {
     assert.equals(100,cuentaCorriente.saldo())
     assert.equals(200, casa.gastos())
     casa.gastar(400)
-    assert.equals(0-300,cuentaCorriente.saldo())
+    assert.equals(-300,cuentaCorriente.saldo())
     assert.equals(600, casa.gastos())
     casa.cambiarElMes()
     assert.equals(0, casa.gastos())
@@ -61,13 +62,14 @@ describe "casa de pepe y julian ejercicio 1" {
   test "funcionamiento normal de casa con cuenta con gastos"{
     assert.equals(0,cuentaConGastos.saldo())
     casa.cuentaGestion(cuentaConGastos)
+    cuentaConGastos.costoOperacion(20)
     assert.equals(20,cuentaConGastos.costoOperacion())
     cuentaConGastos.depositar(1000)
     assert.equals(980, cuentaConGastos.saldo())
     cuentaConGastos.extraer(580)
     assert.equals(400, cuentaConGastos.saldo())
     cuentaConGastos.extraer(500)
-    assert.equals(0-100, cuentaConGastos.saldo())
+    assert.equals(-100, cuentaConGastos.saldo())
     cuentaConGastos.depositar(150)
     assert.equals(30, cuentaConGastos.saldo())
   }
@@ -75,6 +77,7 @@ describe "casa de pepe y julian ejercicio 1" {
   test "funcionamiento caso excepcional de casa con cuenta con gastos"{
     assert.equals(0, cuentaConGastos.saldo())
     casa.cuentaGestion(cuentaConGastos)
+    cuentaConGastos.costoOperacion(20)
     assert.equals(20, cuentaConGastos.costoOperacion())
     assert.throwsException({cuentaConGastos.depositar(10)})
     assert.equals(0, cuentaConGastos.saldo())
@@ -119,10 +122,11 @@ describe "ejercicio 2 cuentas combinadas: saldo cuentas combinadas" {
   }
 }
 
-describe "Gastos de la cuenta combinada"{
+describe "Ejercicio 2: Gastos de la cuenta combinada"{
   test "cuenta con gatos primaria y cuenta corriente secundaria"{
     casa.cuentaGestion(cuentaCombinada)
     cuentaCombinada.cuentaPrimaria(cuentaConGastos)
+    cuentaConGastos.costoOperacion(20)
     cuentaCombinada.cuentaSecundaria(cuentaCorriente)
     assert.equals(0, cuentaCombinada.saldo())
     assert.equals(0, cuentaConGastos.saldo())
