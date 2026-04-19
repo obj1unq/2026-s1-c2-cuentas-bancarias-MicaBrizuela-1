@@ -8,9 +8,53 @@
 // casa.wlk
 // casa.wlk
 // casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
+// casa.wlk
 object casa {
     var gastosMes = 0
     var cuentaGestion = cuentaCorriente
+    var viveres = 0
+
+    method registrarReparacionNecesaria(){
+        
+    }
+        
+    // porcentajeAComprar debe ser un numero entero de 1 al 100
+    method comprarViveres(porcentajeAComprar, calidad){
+        self.validarPorcentajeViveres(porcentajeAComprar)
+        self.gastar(self._calculoViveres(porcentajeAComprar, calidad))
+        viveres += self._calculoViveres(porcentajeAComprar, calidad)
+    }
+
+    method _calculoViveres(porcentajeAComprar, calidad) {
+      return porcentajeAComprar * calidad
+    }
+
+    method validarPorcentajeViveres(porcentajeAComprar) {
+      if (porcentajeAComprar + self.viveres() > 100){
+        self.error("porcentaje a comprar supera la capacidad maxima de almacenamiento")
+      }
+    }
+
+    method viveres(){
+        return viveres
+    }
+
+    method viveres(_viveres){
+        viveres = _viveres
+    }
 
     method gastar(monto){
         cuentaGestion.extraer(monto)
@@ -69,8 +113,12 @@ object cuentaCorrienteClonTest { //al no tener intancias y necesitar numeros red
 }
 
 object cuentaConGastos {
-    const costoOperacion = 20
+    var costoOperacion = 0
     var saldo = 0
+
+    method costoOperacion(_costoOperacion){
+        costoOperacion = _costoOperacion
+    }
 
     method costoOperacion(){
         return costoOperacion
